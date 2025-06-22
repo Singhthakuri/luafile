@@ -1,3 +1,23 @@
+
+if vim.g.vscode then
+-- VSCode: only load options and keymaps (no plugins)
+  require("config.options")
+  require("config.keymaps")
+else
+  -- Full Neovim: load everything
+  require("config.options")
+  require("config.autocmds")
+  require("config.keymaps")
+  require("config.icons")
+  require("plugins")
+  require("config.ui")
+
+end
+
+
+vim.cmd("syntax enable")
+
+vim.cmd("set termguicolors")
 -- Declare the path where lazy will clone plugin code
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
@@ -34,6 +54,8 @@ local opts = {
 require("config.options")
 -- Load the keymaps from the config/keymaps.lua file
 require("config.keymaps")
+--loading terminal connands
+require("plugins.terminal")
 -- Load the auto commands from the config/autocmds.lua file
 require("config.autocmds")
 -- Setup lazy, this should always be last

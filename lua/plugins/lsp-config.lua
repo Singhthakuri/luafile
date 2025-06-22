@@ -1,22 +1,16 @@
+
+
 return {
-    {
-        "williamboman/mason.nvim",
-        config = function()
-            -- setup mason with default properties
-            require("mason").setup({
-                ui = {
-                    border = "rounded"
-                }
-            })
-        end,
-    },
     -- mason lsp config utilizes mason to automatically ensure lsp servers you want installed are installed
     {
         "williamboman/mason-lspconfig.nvim",
         config = function()
             -- ensure that we have lua language server, typescript launguage server, java language server, and java test language server are installed
             require("mason-lspconfig").setup({
-                ensure_installed = { "lua_ls", "tsserver", "jdtls", "cssls" },
+ ensure_installed = { "lua_ls", "jdtls", "cssls",
+    "tsserver",
+    "html",         -- ✅ add this
+    "emmet_ls"  }, 
             })
         end,
     },
@@ -60,7 +54,7 @@ return {
             })
 
             -- setup the typescript language server
-            lspconfig.tsserver.setup({
+            lspconfig.ts_ls.setup({
                 capabilities = capabilities,
             })
 
@@ -91,6 +85,20 @@ return {
                     prefix = "",
                 },
             }
+                
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+-- HTML language server
+lspconfig.html.setup({
+  capabilities = capabilities
+})
+
+-- Optional: Emmet for HTML/CSS
+lspconfig.emmet_ls.setup({
+  capabilities = capabilities,
+  filetypes = { "html", "css", "typescriptreact", "javascriptreact" }
+})
+
 
             vim.diagnostic.config(default_diagnostic_config)
 

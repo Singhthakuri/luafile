@@ -3,6 +3,26 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+--neovim
+-- ONLY set <leader>e if NOT in VSCode
+if vim.g.vscode then
+  local sidebar_open = false
+
+  vim.keymap.set("n", "<leader>e", function()
+    if sidebar_open then
+      vim.fn.VSCodeNotify("workbench.action.toggleSidebarVisibility")
+      sidebar_open = false
+    else
+      vim.fn.VSCodeNotify("workbench.view.explorer")
+      vim.defer_fn(function()
+        vim.fn.VSCodeNotify("workbench.action.focusSideBar")
+      end, 100)
+      sidebar_open = true
+    end
+  end, { noremap = true, silent = true, desc = "Toggle VSCode Explorer" })
+end
+
+
 -- Remove search highlights after searching
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Remove search highlights" })
 
@@ -47,7 +67,39 @@ vim.api.nvim_set_keymap("n", "<C-j>", "<C-w>j", { noremap = true, silent = true 
 vim.api.nvim_set_keymap("n", "<C-k>", "<C-w>k", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<C-l>", "<C-w>l", { noremap = true, silent = true })
 
--- to insert mode using jk 
+ -- to insert mode using jk 
 -- 
 -- Map 'jk' to exit insert mode
-vim.api.nvim_set_keymap("i", "jk", "<Esc>", { noremap = true, silent = true })
+vim.keymap.set("i", "jk", "<Esc>", { noremap = true, silent = true, desc = "Exit insert mode with jk" })
+
+
+vim.keymap.set("n", "<leader>t", ":terminal<CR>", { noremap = true, silent = true, desc = "Open terminal" })
+-- selecting the highlight text 
+vim.keymap.set('n', '<CR>', 'viw', { noremap = true, silent = true, desc = "Select word under cursor" })
+ ---navigation 
+ -- Better window navigation
+vim.keymap.set('n', '<C-h>', '<C-w>h', { desc = "Move to left window" })
+vim.keymap.set('n', '<C-j>', '<C-w>j', { desc = "Move to window below" })
+vim.keymap.set('n', '<C-k>', '<C-w>k', { desc = "Move to window above" })
+vim.keymap.set('n', '<C-l>', '<C-w>l', { desc = "Move to right window" })
+
+--using  space to split the window
+-- Split window horizontally with <leader>h
+vim.keymap.set('n', '<leader>h', ':split<CR>', { desc = "Horizontal split" })
+
+-- Split window vertically with <leader>v
+vim.keymap.set('n', '<leader>v', ':vsplit<CR>', { desc = "Vertical split" })
+--- for sizing the windows
+-- Maximize current window (close others)
+vim.keymap.set('n', '<leader>m', ':only<CR>', { desc = "Maximize current window" })
+
+-- Equalize splits
+vim.keymap.set('n', '<leader>=', '<C-w>=', { desc = "Equalize window sizes" })
+
+-- Resize window manually
+vim.keymap.set('n', '<C-Up>', ':resize -2<CR>', { desc = "Shrink window height" })
+vim.keymap.set('n', '<C-Down>', ':resize +2<CR>', { desc = "Increase window height" })
+vim.keymap.set('n', '<C-Left>', ':vertical resize -2<CR>', { desc = "Shrink window width" })
+vim.keymap.set('n', '<C-Right>', ':vertical resize +2<CR>', { desc = "Increase window width" })
+--terminal 
+vim.keymap.set('n', '<leader>t', ':belowright split | terminal<CR>', { desc = "Open terminal at bottom" })
