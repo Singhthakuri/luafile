@@ -13,8 +13,7 @@ else
   require("config.ui")
 
 end
-
-
+-- Auto-save when leaving Insert mode or changing buffers
 vim.cmd("syntax enable")
 
 vim.cmd("set termguicolors")

@@ -8,7 +8,7 @@ return {
             -- ensure that we have lua language server, typescript launguage server, java language server, and java test language server are installed
             require("mason-lspconfig").setup({
  ensure_installed = { "lua_ls", "jdtls", "cssls",
-    "tsserver",
+    "ts_ls",
     "html",         -- ✅ add this
     "emmet_ls"  }, 
             })
@@ -86,7 +86,6 @@ return {
                 },
             }
                 
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 -- HTML language server
 lspconfig.html.setup({
@@ -132,4 +131,4 @@ lspconfig.emmet_ls.setup({
             vim.keymap.set("n", "<leader>cD", vim.lsp.buf.declaration, { desc = "[C]ode Goto [D]eclaration" })
         end,
     },
-}
+}  

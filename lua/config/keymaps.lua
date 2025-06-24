@@ -75,8 +75,6 @@ vim.keymap.set("i", "jk", "<Esc>", { noremap = true, silent = true, desc = "Exit
 
 vim.keymap.set("n", "<leader>t", ":terminal<CR>", { noremap = true, silent = true, desc = "Open terminal" })
 -- selecting the highlight text 
-vim.keymap.set('n', '<CR>', 'viw', { noremap = true, silent = true, desc = "Select word under cursor" })
- ---navigation 
  -- Better window navigation
 vim.keymap.set('n', '<C-h>', '<C-w>h', { desc = "Move to left window" })
 vim.keymap.set('n', '<C-j>', '<C-w>j', { desc = "Move to window below" })
